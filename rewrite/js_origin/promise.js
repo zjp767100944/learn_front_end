@@ -30,10 +30,11 @@ class MyPromise {
       }
     };
 
-    // 捕获promise内跑抛出的Erroe
+    // 捕获promise内跑抛出的Error
     try {
       executor(resolve, reject);
     } catch (e) {
+      console.log('executor');
       reject(e);
     }
   }
@@ -44,6 +45,7 @@ class MyPromise {
       typeof onRejected === 'function' ?
         onRejected :
         reason => {
+          console.log('error');
           throw new Error(reason);
         };
 
@@ -151,7 +153,7 @@ const resolvePromise = (promise2, x, resolve, reject) => {
 };
 
 const p1 = new MyPromise((resolve, reject) => {
-  resolve(2);
+  throw new Error('haha');
 })
   .then(
     value =>
